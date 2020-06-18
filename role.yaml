@@ -1,0 +1,14 @@
+---
+- name: build containerized application
+  hosts: build
+  vars:
+    dockeruser: <placeholder username hub.docker.com>
+    dockerpass: <placeholder password hub.docker.com>
+    dockeremail: <placeholder e-mail hub.docker.com>
+  roles:
+    - role: homework-ansible-role-build
+
+- name: deploy containerized application
+  hosts: prod
+  roles:
+    - role: homework-ansible-role-deploy

@@ -1,9 +1,8 @@
 ---
 # vars file for homework-ansible-role-build
-packages:
-  - git
-  - maven
-  - docker-ce
+packages: [git, maven, docker.io, python, python-pip]
+service: docker
+module: docker-py
 repo_path: https://github.com/anunyavas/homework_docker.git
 build_path: /tmp/homework_docker
 image_name: ysemenets/boxfuse

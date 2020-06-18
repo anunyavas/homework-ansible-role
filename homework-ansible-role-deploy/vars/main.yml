@@ -1,7 +1,8 @@
 ---
 # vars file for homework-ansible-role-deploy
-packages:
-  - docker-ce
+packages: [docker.io, python, python-pip]
+service: docker
+module: docker-py
 image_name: ysemenets/boxfuse
 image_tag: latest
 app_port: 8080

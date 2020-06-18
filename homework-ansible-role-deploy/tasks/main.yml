@@ -5,12 +5,23 @@
     name: "{{ packages }}"
     state: present
     update_cache: yes
-- name: run application
-  docker:
-    name: app
-    image: "{{ image_name }}/{{ image_tag }}"
+- name: ensure docker-py is present
+  pip:
+    name: docker-py
+- name: ensure docker-py is present
+  pip:
+    name: "{{ module }}"
+- name: enable and start service
+  service:
+    name: "{{ service }}"
     state: started
-    pull: always
+    enabled: yes
+- name: run application
+  docker_container:
+    name: app
+    image: "{{ image_name }}:{{ image_tag }}"
+    state: started
+    pull: true
     ports:
       - "{{ app_port }}:{{ app_port }}"
 - name: wait while app is starting
