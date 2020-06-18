@@ -1,2 +1,7 @@
 ---
 # vars file for homework-ansible-role-deploy
+packages:
+  - docker-ce
+image_name: ysemenets/boxfuse
+image_tag: latest
+app_port: 8080

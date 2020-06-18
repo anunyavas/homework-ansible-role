@@ -1,2 +1,28 @@
 ---
 # tasks file for homework-ansible-role-build
+- name: ensure packages are installed
+    apt:
+      name: "{{ packages }}"
+      state: present
+      update_cache: yes
+- name: get sources for build from github
+    git:
+      repo: "{{ repo_path }}}"
+      dest: "{{ build_path }}"
+- name: Log into DockerHub
+  docker_login:
+    username: "{{ dockeruser }}"
+    password: "{{ dockerpass }}"
+    email: "{{ dockeremail }}"
+- name: build and containerize application
+  docker_image:
+    build:
+      path: "{{ build_path }}"
+    name: "{{ image_name }}"
+    tag: "{{ image_tag }}"
+    push: yes
+    source: build
+- name: delete temp files
+  file:
+    path: "{{ build_path }}"
+    state: absent

@@ -1,2 +1,21 @@
 ---
 # tasks file for homework-ansible-role-deploy
+- name: ensure packages are installed
+  apt:
+    name: "{{ packages }}"
+    state: present
+    update_cache: yes
+- name: run application
+  docker:
+    name: app
+    image: "{{ image_name }}/{{ image_tag }}"
+    state: started
+    pull: always
+    ports:
+      - "{{ app_port }}:{{ app_port }}"
+- name: wait while app is starting
+  pause:
+    minutes: 1
+- name: check if application is running
+  uri:
+    url: http://127.0.0.1:8080/hello-1.0/
